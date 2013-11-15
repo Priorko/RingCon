@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/timePicker1"
+        android:weightSum="7" >
+
+        <ToggleButton
+            android:id="@+id/tbtnMon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textOff="@string/monday_short"
+            android:textOn="@string/monday_short" />
+
+        <ToggleButton
+            android:id="@+id/tbtnTue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textOff="@string/tuesday_short"
+            android:textOn="@string/tuesday_short" />
+
+        <ToggleButton
+            android:id="@+id/tbtnWed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textOff="@string/wednesday_short"
+            android:textOn="@string/wednesday_short" />
+
+        <ToggleButton
+            android:id="@+id/tbtnThu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textOff="@string/thursday_short"
+            android:textOn="@string/thursday_short" />
+
+        <ToggleButton
+            android:id="@+id/tbtnFri"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="@string/friday_short"
+            android:textOn="@string/friday_short" />
+
+        <ToggleButton
+            android:id="@+id/tbtnSat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textOff="@string/saturday_short"
+            android:textOn="@string/saturday_short" />
+
+        <ToggleButton
+            android:id="@+id/tbtnSun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textOff="@string/saturday_short"
+            android:textOn="@string/saturday_short" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/apply_rule" />
+
+    <TimePicker
+        android:id="@+id/timePicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/activity_horizontal_margin" />
+
+</RelativeLayout>
