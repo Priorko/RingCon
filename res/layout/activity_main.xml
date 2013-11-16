@@ -23,4 +23,15 @@
         android:text="add"
         android:onClick="onAddRule" />
 
+    <ListView
+        android:id="@+id/ruleList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scrollView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp" >
+    </ListView>
+
+    
+
 </RelativeLayout>
