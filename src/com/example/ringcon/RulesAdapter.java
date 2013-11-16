@@ -26,19 +26,16 @@ public class RulesAdapter extends BaseAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
-	// кол-во элементов
 	@Override
 	public int getCount() {
 		return objects.size();
 	}
 
-	// элемент по позиции
 	@Override
 	public Object getItem(int position) {
 		return objects.get(position);
 	}
 
-	// id по позиции
 	@Override
 	public long getItemId(int position) {
 		return position;
@@ -46,7 +43,6 @@ public class RulesAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// используем созданные, но не используемые view
 		View view = convertView;
 		if (view == null) {
 			view = lInflater.inflate(R.layout.list_item, parent, false);
@@ -67,16 +63,13 @@ public class RulesAdapter extends BaseAdapter {
 		return view;
 	}
 
-	// товар по позиции
 	Rule getRule(int position) {
 		return ((Rule) getItem(position));
 	}
-
-	// обработчик для чекбоксов
+	
 	OnCheckedChangeListener myCheckChangList = new OnCheckedChangeListener() {
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
-			// меняем данные товара (в корзине или нет)
 			getRule((Integer) buttonView.getTag()).setActive(isChecked);
 		}
 	};
