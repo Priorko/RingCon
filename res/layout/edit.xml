@@ -3,13 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
+    <TimePicker
+        android:id="@+id/timePicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TimePicker
+        android:id="@+id/timePicker2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
-        android:orientation="horizontal">
-        <Button
-        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/apply_rule" />
+        android:orientation="horizontal" >
+
     </LinearLayout>
     
     <LinearLayout
@@ -87,13 +96,22 @@
             android:textOn="@string/saturday_short" />
     </LinearLayout>
 
-
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal">
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="wrap_content"
+        android:layout_width="159dp"
         android:layout_height="wrap_content"
         android:text="@string/apply_rule" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="151dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_rule" />
+
+    </LinearLayout>
 </LinearLayout>

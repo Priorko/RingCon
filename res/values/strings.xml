@@ -3,7 +3,11 @@
 
     <string name="app_name">RingCon</string>
     <string name="action_settings">Settings</string>
-
+	
+	<!-- abbreviations for day of the week -->
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    
     <!-- abbreviations for day of the week -->
     <string name="monday_short">Mon</string>
     <string name="tuesday_short">Tue</string>
@@ -13,6 +17,7 @@
     <string name="saturday_short">Sat</string>
     <string name="sunday_short">Sun</string>
     
+    <!-- abbreviations for day of the week -->
     <string name="apply_rule">Apply</string>
     <string name="cancel_rule">Cancel</string>
 
