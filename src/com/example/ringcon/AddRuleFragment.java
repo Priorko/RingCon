@@ -24,7 +24,7 @@ public class AddRuleFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		containerView = (RelativeLayout) inflater.inflate(R.layout.dailog_add_rule, null);
+		containerView = (RelativeLayout) inflater.inflate(R.layout.edit, null);
 		return containerView;
 	}
 

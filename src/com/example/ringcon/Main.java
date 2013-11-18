@@ -10,7 +10,7 @@ import java.util.Date;
 import android.view.View;
 import android.widget.ListView;
 
-public class MainActivity extends FragmentActivity {
+public class Main extends FragmentActivity {
 
 	Rule[] rules ={new Rule(new Date(), new Date(), true),new Rule(new Date(), new Date(), true),new Rule(new Date(), new Date(), true),};
 	ListView ruleList;
@@ -19,7 +19,7 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.main);
 		
 		
 		ArrayList<Rule> assetList = new ArrayList<Rule>(Arrays.asList(rules));
@@ -33,5 +33,13 @@ public class MainActivity extends FragmentActivity {
 	public void onAddRule(View v) {
 		AddRuleFragment mContent = new AddRuleFragment();
 		mContent.show(getSupportFragmentManager(), "add_rule");
+	}
+	// place the menu items into the action bar
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_activity_actions, menu);
+	    return super.onCreateOptionsMenu(menu);
 	}
 }
