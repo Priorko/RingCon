@@ -15,5 +15,7 @@
     <string name="sunday_short">Sun</string>
     
     <string name="apply_rule">Apply</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
 
 </resources>
