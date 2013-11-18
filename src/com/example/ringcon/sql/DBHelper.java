@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			+ Rule.KEY_ACTIVE + " boolean" + ");";
 	
 	public static final String DB_NAME = "ringcon";
-	public static final int DB_VERSION = 0;
+	public static final int DB_VERSION = 1;
 
 	public DBHelper(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);

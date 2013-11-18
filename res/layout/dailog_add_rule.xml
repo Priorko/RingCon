@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" >
+
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -9,8 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/timePicker1"
-        android:weightSum="7" >
+        android:layout_below="@+id/endTime"
+        android:weightSum="7"
+        android:paddingTop="5dp" >
 
         <ToggleButton
             android:id="@+id/tbtnMon"
@@ -77,12 +83,12 @@
             android:layout_weight="1"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
-            android:textOff="@string/saturday_short"
-            android:textOn="@string/saturday_short" />
+            android:textOff="@string/sunday_short"
+            android:textOn="@string/sunday_short" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/addRule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
@@ -90,11 +96,19 @@
         android:text="@string/apply_rule" />
 
     <TimePicker
-        android:id="@+id/timePicker1"
+        android:id="@+id/startTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:padding="@dimen/activity_horizontal_margin" />
 
+    <TimePicker
+        android:id="@+id/endTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startTime"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
+</ScrollView>
