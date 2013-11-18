@@ -3,7 +3,8 @@ package com.example.ringcon;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import structure.Rule;
+import com.example.ringcon.structure.Rule;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
