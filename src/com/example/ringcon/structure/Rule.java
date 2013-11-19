@@ -86,10 +86,20 @@ public class Rule implements Serializable {
 		this.active = active;
 	}
 
-	public ContentValues getCV() {
+	public ContentValues getCVwithID() {
 		ContentValues cv = new ContentValues();
 
 		cv.put(KEY_ID, this.id);
+		cv.put(KEY_STARTDATE, String.valueOf(this.startDate));
+		cv.put(KEY_ENDDATE, String.valueOf(this.finishDate));
+		cv.put(KEY_WEEKDAYS, String.valueOf(this.weekdays));
+		cv.put(KEY_ACTIVE, String.valueOf(this.active));
+		return cv;
+	}
+	
+	public ContentValues getCV() {
+		ContentValues cv = new ContentValues();
+
 		cv.put(KEY_STARTDATE, String.valueOf(this.startDate));
 		cv.put(KEY_ENDDATE, String.valueOf(this.finishDate));
 		cv.put(KEY_WEEKDAYS, String.valueOf(this.weekdays));
@@ -100,5 +110,4 @@ public class Rule implements Serializable {
 	public ArrayList<Integer> getArrayOfWeekDays() {
 		return DateUtils.getWeekDays(this.weekdays);
 	}
-
 }

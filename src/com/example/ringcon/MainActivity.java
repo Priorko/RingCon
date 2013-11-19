@@ -1,19 +1,12 @@
 package com.example.ringcon;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.ringcon.sql.DBHelper;
 import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
 

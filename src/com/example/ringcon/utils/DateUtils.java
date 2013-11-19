@@ -19,8 +19,6 @@ public class DateUtils {
 		return null;
 	}
 
-	
-	//to be removed
 	public static ArrayList<Integer> getWeekDays(int days) {
 		ArrayList<Integer> weekDays = new ArrayList<Integer>();
 

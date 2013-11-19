@@ -3,8 +3,6 @@ package com.example.ringcon;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
