@@ -53,13 +53,8 @@ public class RulesAdapter extends BaseAdapter {
 
 		Rule rule = getRule(position);
 
-		SimpleDateFormat simpleDate = new SimpleDateFormat("HH:mm", Locale.getDefault());
-		
-
-		((TextView) view.findViewById(R.id.startDate)).setText(simpleDate
-				.format(rule.getStartDate()));
-		((TextView) view.findViewById(R.id.finishDate)).setText(simpleDate
-				.format(rule.getFinishDate()));
+		((TextView) view.findViewById(R.id.startDate)).setText(DateUtils.getTime(rule.getStartDate()));
+		((TextView) view.findViewById(R.id.finishDate)).setText(DateUtils.getTime(rule.getFinishDate()));
 		((TextView) view.findViewById(R.id.weekDays)).setText(DateUtils.getDays(rule.getWeekdays()));
 		CheckBox cbBuy = (CheckBox) view.findViewById(R.id.isActive);
 		cbBuy.setOnCheckedChangeListener(myCheckChangList);
@@ -67,7 +62,7 @@ public class RulesAdapter extends BaseAdapter {
 		cbBuy.setChecked(rule.isActive());
 		return view;
 	}
-
+	
 	Rule getRule(int position) {
 		return ((Rule) getItem(position));
 	}
