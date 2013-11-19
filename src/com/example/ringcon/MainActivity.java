@@ -14,7 +14,7 @@ public class MainActivity extends FragmentActivity {
 
 	ListView ruleLv;
 	SQLiteAdapter sqliteAdapter;
-	SilanceManagerReceiver silanceManager;
+	SilenceManagerReceiver silanceManager;
 	RulesAdapter ruleAdapter;
 
 	@Override
@@ -23,7 +23,7 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 		
 		sqliteAdapter = new SQLiteAdapter(this);
-		silanceManager = new SilanceManagerReceiver();
+		silanceManager = new SilenceManagerReceiver();
 		ruleLv = (ListView) findViewById(R.id.ruleLv);
 		
 		refreshList();

@@ -45,7 +45,7 @@ public class AddRuleFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		containerView = (ScrollView) inflater.inflate(R.layout.dailog_add_rule, null);
+		containerView = (ScrollView) inflater.inflate(R.layout.dailog_rule, null);
 		dayContainer = (LinearLayout) containerView.findViewById(R.id.dayContainer);
 		dayList = new ArrayList<ToggleButton>();
 		
