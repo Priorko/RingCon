@@ -17,7 +17,7 @@ import android.os.PowerManager;
 import com.example.ringcon.structure.Rule;
 import com.example.ringcon.utils.DateUtils;
 
-public class SilanceManagerReceiver extends BroadcastReceiver {
+public class SilenceManagerReceiver extends BroadcastReceiver {
 
 	final public static String KEY_RULE = "rule";
 	final public static String KEY_TIME = "time";
@@ -71,12 +71,12 @@ public class SilanceManagerReceiver extends BroadcastReceiver {
 			calendarToday.add(Calendar.DAY_OF_YEAR, i);
 			int todaysDay = calendarToday.get(Calendar.DAY_OF_WEEK);
 			if (ruleDays.indexOf(todaysDay) >= 0) {
-				Intent startIntent = new Intent(context, SilanceManagerReceiver.class);
+				Intent startIntent = new Intent(context, SilenceManagerReceiver.class);
 				startIntent.putExtra(KEY_START, true);
 				PendingIntent startPendingIntent = PendingIntent.getBroadcast(context, rule.getId(), startIntent, 0);
 				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, rule.getStartDate(), AlarmManager.INTERVAL_DAY * 7 , startPendingIntent);
 
-				Intent finishIntent = new Intent(context, SilanceManagerReceiver.class);
+				Intent finishIntent = new Intent(context, SilenceManagerReceiver.class);
 				finishIntent.putExtra(KEY_START, false);
 				PendingIntent finishPendingIntent = PendingIntent.getBroadcast(context, rule.getId(), finishIntent, 0);
 				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, rule.getFinishDate(), AlarmManager.INTERVAL_DAY * 7 , finishPendingIntent);
@@ -84,7 +84,7 @@ public class SilanceManagerReceiver extends BroadcastReceiver {
 	}
 
 	public void CancelAlarm(Context context, Rule rule) {
-		Intent intent = new Intent(context, SilanceManagerReceiver.class);
+		Intent intent = new Intent(context, SilenceManagerReceiver.class);
 		PendingIntent sender = PendingIntent.getBroadcast(context, rule.getId(), intent, 0);
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.cancel(sender);

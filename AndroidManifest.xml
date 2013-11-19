@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".SilanceManagerReceiver"></receiver>
+        <receiver android:name=".SilenceManagerReceiver"></receiver>
     </application>
 
 </manifest>
