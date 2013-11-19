@@ -38,12 +38,15 @@
         android:layout_marginLeft="20dp"
         android:text="@string/debug_text"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/removeRule"
         android:layout_width="@dimen/icon_size"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/remove_rule" />
+        android:contentDescription="@string/debug_text"
+        android:src="@drawable/remove_rule"
+        
+        android:onClick="onRemoveRule" />
     
 </RelativeLayout>

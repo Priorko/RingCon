@@ -1,8 +1,6 @@
 package com.example.ringcon;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -35,7 +33,7 @@ public class RulesAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public Rule getItem(int position) {
 		return objects.get(position);
 	}
 
@@ -51,7 +49,7 @@ public class RulesAdapter extends BaseAdapter {
 			view = lInflater.inflate(R.layout.list_item, parent, false);
 		}
 
-		Rule rule = getRule(position);
+		Rule rule = getItem(position);
 
 		((TextView) view.findViewById(R.id.startDate)).setText(DateUtils.getTime(rule.getStartDate()));
 		((TextView) view.findViewById(R.id.finishDate)).setText(DateUtils.getTime(rule.getFinishDate()));
@@ -60,17 +58,16 @@ public class RulesAdapter extends BaseAdapter {
 		cbBuy.setOnCheckedChangeListener(myCheckChangList);
 		cbBuy.setTag(position);
 		cbBuy.setChecked(rule.isActive());
+		
+		view.findViewById(R.id.removeRule).setTag(getItem(position));
+		
 		return view;
 	}
-	
-	Rule getRule(int position) {
-		return ((Rule) getItem(position));
-	}
-	
+
 	OnCheckedChangeListener myCheckChangList = new OnCheckedChangeListener() {
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
-			getRule((Integer) buttonView.getTag()).setActive(isChecked);
+			getItem((Integer) buttonView.getTag()).setActive(isChecked);
 		}
 	};
 

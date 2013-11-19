@@ -76,15 +76,21 @@ public class AddRuleFragment extends DialogFragment {
 						day += (int)Math.pow(2, i);
 				}
 
+				
 				long startTime = (startTimePicker.getCurrentHour()*60 + startTimePicker.getCurrentMinute())*60*1000;
 				long endTime = (endTimePicker.getCurrentHour()*60 + endTimePicker.getCurrentMinute())*60*1000;
 
 				Rule rule = new Rule(startTime, endTime, day, true);
 
-				new SQLiteAdapter(getActivity()).addRule(rule);
+				long id = new SQLiteAdapter(getActivity()).addRule(rule);
 
 				if (getActivity() != null && MainActivity.class.isInstance(getActivity())) {
+					
 					((MainActivity)getActivity()).refreshList();
+					if (id >= 0) {
+						rule.setId(id);
+						((MainActivity)getActivity()).setRule(rule);
+					}
 				}
 				AddRuleFragment.this.dismiss();
 			}

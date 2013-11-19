@@ -20,12 +20,12 @@ public class SQLiteAdapter {
 		dbHelper = new DBHelper(context);
 	}
 
-	public boolean addRule(Rule rule) {
+	public long addRule(Rule rule) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
-		return db.insert(DBHelper.TABLE_NAME, null, rule.getCV()) >= 0;
+		return db.insert(DBHelper.TABLE_NAME, null, rule.getCV());
 	}
 
-	public boolean removeRule(int id) {
+	public boolean removeRule(long id) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		return db.delete(DBHelper.TABLE_NAME, Rule.KEY_ID + "=" + id, null) >= 0;
 	}
@@ -61,7 +61,7 @@ public class SQLiteAdapter {
 			long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(Rule.KEY_ID));
 			long startTime = cursor.getLong(cursor.getColumnIndexOrThrow(Rule.KEY_STARTDATE));
 			long endTime = cursor.getLong(cursor.getColumnIndexOrThrow(Rule.KEY_ENDDATE));
-			boolean isActive = (cursor.getInt(cursor.getColumnIndexOrThrow(Rule.KEY_ACTIVE)) == 1) ? true : false;
+			boolean isActive = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndexOrThrow(Rule.KEY_ACTIVE)));
 			int weekDays = cursor.getInt(cursor.getColumnIndexOrThrow(Rule.KEY_WEEKDAYS));
 
 //			Date startDate = new Date();

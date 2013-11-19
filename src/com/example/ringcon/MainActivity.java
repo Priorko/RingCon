@@ -13,12 +13,19 @@ import com.example.ringcon.structure.Rule;
 public class MainActivity extends FragmentActivity {
 
 	ListView ruleLv;
+	SQLiteAdapter sqliteAdapter;
+	SilanceManagerReceiver silanceManager;
+	RulesAdapter ruleAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		sqliteAdapter = new SQLiteAdapter(this);
+		silanceManager = new SilanceManagerReceiver();
 		ruleLv = (ListView) findViewById(R.id.ruleLv);
+		
 		refreshList();
 	}
 
@@ -38,8 +45,22 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void refreshList() {
-		ArrayList<Rule> ruleList = new SQLiteAdapter(this).getRules();
-		RulesAdapter ruleAdapter = new RulesAdapter(this, ruleList);
+		ArrayList<Rule> ruleList = sqliteAdapter.getRules();
+		ruleAdapter = new RulesAdapter(this, ruleList);
 		ruleLv.setAdapter(ruleAdapter);
+	}
+
+	public void onRemoveRule(View v) {
+		Rule rule = (Rule) v.getTag();
+		silanceManager.cancelAlarm(this.getApplicationContext(), rule);
+		boolean oo = sqliteAdapter.removeRule(rule.getId());
+		refreshList();
+		
+	}
+
+	public void setRule(Rule rule) {
+		if (silanceManager != null) {
+			silanceManager.setRule(this.getApplicationContext(), rule);
+		}
 	}
 }
