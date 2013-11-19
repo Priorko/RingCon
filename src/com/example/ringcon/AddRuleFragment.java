@@ -2,7 +2,6 @@ package com.example.ringcon;
 
 import java.util.ArrayList;
 
-import structure.Rule;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +20,8 @@ import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 import com.example.ringcon.sql.DBHelper;
+import com.example.ringcon.sql.SQLiteAdapter;
+import com.example.ringcon.structure.Rule;
 
 public class AddRuleFragment extends DialogFragment {
 
@@ -74,24 +75,20 @@ public class AddRuleFragment extends DialogFragment {
 				int day = 0;
 				for(int i=0; i<dayList.size(); i++){
 					if(dayList.get(i).isChecked())
-						day += (int)Math.pow(2.0, i);
+						day += (int)Math.pow(2, i);
 				}
-				mDbHelper = new DBHelper(getActivity());
-				SQLiteDatabase db = mDbHelper.getWritableDatabase();
-				
+
 				long startTime = (startTimePicker.getCurrentHour()*60 + startTimePicker.getCurrentMinute())*60*1000;
 				long endTime = (endTimePicker.getCurrentHour()*60 + endTimePicker.getCurrentMinute())*60*1000;
-				
-				ContentValues values = new ContentValues();
-				values.put(Rule.KEY_STARTDATE, startTime);
-				values.put(Rule.KEY_ENDDATE, endTime);
-				values.put(Rule.KEY_ACTIVE, true);
-				values.put(Rule.KEY_WEEKDAYS, day);
-				
-				db.insert(DBHelper.TABLE_NAME, null, values);
-				db.close();
-				mDbHelper.close();
-				dismiss();
+
+				Rule rule = new Rule(startTime, endTime, day, true);
+
+				new SQLiteAdapter(getActivity()).addRule(rule);
+
+				if (getActivity() != null && MainActivity.class.isInstance(getActivity())) {
+					((MainActivity)getActivity()).refreshList();
+				}
+				AddRuleFragment.this.dismiss();
 			}
 		});
 		return containerView;

@@ -10,15 +10,17 @@ public class DateUtils {
 		if (days == 0) {
 			return new String();
 		}
-		for (int i = DAYS_OF_WEEK.length + 1; i >= 0 ; i++) {
-			if (Math.pow(2, i) > days) {
-				days -= Math.pow(2, i - 1);
-				return getDays(days) + (days == 0 ? "" : ", " )+ DAYS_OF_WEEK[i - 1];
+		for (int i = DAYS_OF_WEEK.length - 1 ; i >= 0 ; i--) {
+			if (Math.pow(2, i) <= days) {
+				days -= Math.pow(2, i);
+				return getDays(days) + (days == 0 ? "" : ", " )+ DAYS_OF_WEEK[i];
 			}
 		}
 		return null;
 	}
 
+	
+	//to be removed
 	public static ArrayList<Integer> getWeekDays(int days) {
 		ArrayList<Integer> weekDays = new ArrayList<Integer>();
 

@@ -2,8 +2,8 @@ package com.example.ringcon;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
-import structure.Rule;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +13,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
+
+import com.example.ringcon.structure.Rule;
+import com.example.ringcon.utils.DateUtils;
 
 public class RulesAdapter extends BaseAdapter {
 	Context ctx;
@@ -50,13 +53,14 @@ public class RulesAdapter extends BaseAdapter {
 
 		Rule rule = getRule(position);
 
-		SimpleDateFormat simpleDate = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat simpleDate = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		
 
 		((TextView) view.findViewById(R.id.startDate)).setText(simpleDate
 				.format(rule.getStartDate()));
 		((TextView) view.findViewById(R.id.finishDate)).setText(simpleDate
 				.format(rule.getFinishDate()));
+		((TextView) view.findViewById(R.id.weekDays)).setText(DateUtils.getDays(rule.getWeekdays()));
 		CheckBox cbBuy = (CheckBox) view.findViewById(R.id.isActive);
 		cbBuy.setOnCheckedChangeListener(myCheckChangList);
 		cbBuy.setTag(position);

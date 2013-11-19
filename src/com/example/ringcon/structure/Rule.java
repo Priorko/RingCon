@@ -28,12 +28,14 @@ public class Rule implements Serializable {
 		startDate = sDate;
 		finishDate = fDate;
 		active = isOn;
+		weekdays = repeating;
 	}
 
 	public Rule (Date sDate, Date fDate, int repeating, boolean isOn){
 		setStartDate(sDate);
 		setFinishDate(fDate);
 		active = isOn;
+		weekdays = repeating;
 	}
 
 	public int getId() {
