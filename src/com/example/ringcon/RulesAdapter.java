@@ -33,7 +33,7 @@ public class RulesAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Rule getItem(int position) {
+	public Object getItem(int position) {
 		return objects.get(position);
 	}
 
@@ -49,7 +49,7 @@ public class RulesAdapter extends BaseAdapter {
 			view = lInflater.inflate(R.layout.list_item, parent, false);
 		}
 
-		Rule rule = getItem(position);
+		Rule rule = getRule(position);
 
 		((TextView) view.findViewById(R.id.startDate)).setText(DateUtils.getTime(rule.getStartDate()));
 		((TextView) view.findViewById(R.id.finishDate)).setText(DateUtils.getTime(rule.getFinishDate()));
@@ -58,17 +58,19 @@ public class RulesAdapter extends BaseAdapter {
 		cbBuy.setOnCheckedChangeListener(myCheckChangList);
 		cbBuy.setTag(position);
 		cbBuy.setChecked(rule.isActive());
-		
-		view.findViewById(R.id.removeRule).setTag(getItem(position));
-		
 		return view;
 	}
-
+	
+	Rule getRule(int position) {
+		return ((Rule) getItem(position));
+	}
+	
 	OnCheckedChangeListener myCheckChangList = new OnCheckedChangeListener() {
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
-			getItem((Integer) buttonView.getTag()).setActive(isChecked);
+			getRule((Integer) buttonView.getTag()).setActive(isChecked);
 		}
 	};
 
 }
+

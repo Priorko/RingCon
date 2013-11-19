@@ -40,7 +40,7 @@ public class MainActivity extends FragmentActivity {
 //    	} else {
 //    		Toast.makeText(context, "Crap! Can't do this :(", Toast.LENGTH_SHORT).show();
 //    	}
-		AddRuleFragment mContent = new AddRuleFragment();
+		RuleFragment mContent = new RuleFragment();
 		mContent.show(getSupportFragmentManager(), "add_rule");
 	}
 
