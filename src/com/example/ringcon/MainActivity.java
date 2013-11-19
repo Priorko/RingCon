@@ -3,6 +3,7 @@ package com.example.ringcon;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import structure.Rule;
 import android.database.Cursor;
@@ -17,21 +18,13 @@ import com.example.ringcon.sql.DBHelper;
 
 public class MainActivity extends FragmentActivity {
 
-	Rule[] rules = {new Rule(new Date(), new Date(), true),new Rule(new Date(), new Date(), true),new Rule(new Date(), new Date(), true)};
-	ListView ruleList;
-	RulesAdapter ruleAdapter;
-
+	ListView ruleLv;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		ArrayList<Rule> assetList = new ArrayList<Rule>(Arrays.asList(rules));
-		ruleAdapter = new RulesAdapter(this, assetList);
-
-		ruleList = (ListView) findViewById(R.id.ruleList);
-		ruleList.setAdapter(ruleAdapter);
-
+		ruleLv = (ListView) findViewById(R.id.ruleLv);
 		getDataFromDB();
 	}
 
@@ -56,6 +49,8 @@ public class MainActivity extends FragmentActivity {
 			);
 		if(cursor.getCount()==0)
 			return;
+		
+		ArrayList<Rule> ruleList = new ArrayList<Rule>();
 		cursor.moveToFirst();
 		for(int i=0; i<cursor.getCount(); i++){
 			long itemId = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
@@ -63,14 +58,34 @@ public class MainActivity extends FragmentActivity {
 			long endTime = cursor.getLong(cursor.getColumnIndexOrThrow(Rule.KEY_ENDDATE));
 			boolean isActive = (cursor.getInt(cursor.getColumnIndexOrThrow(Rule.KEY_ACTIVE)) == 1) ? true : false;
 			int weekDays = cursor.getInt(cursor.getColumnIndexOrThrow(Rule.KEY_WEEKDAYS));
+			
+			Date startDate = new Date(startTime);
+			Date endDate = new Date(endTime);
+			
+			ArrayList<Boolean> onDays = new ArrayList<Boolean>();
+			while(weekDays > 0){
+				if(weekDays % 2 == 0)
+					onDays.add(false);
+				else
+					onDays.add(true);
+				weekDays /= 2;
+			}
 			Log.d("itemId", ""+itemId);
-			Log.d("startTime", ""+startTime);
-			Log.d("endTime", ""+endTime);
+			Log.d("startTime", ""+startDate);
+			Log.d("endTime", ""+endDate);
 			Log.d("isActive", ""+isActive);
 			Log.d("weekDays", ""+weekDays);
+			
+			Rule rule = new Rule(startDate, endDate, isActive);
+			rule.setWeekdays(onDays);
+			ruleList.add(rule);
+			
 			cursor.moveToNext();
 		}
 		cursor.close();
+		
+		RulesAdapter ruleAdapter = new RulesAdapter(this, ruleList);
+		ruleLv.setAdapter(ruleAdapter);
 	}
 	
 	public void onAddRule(View v) {

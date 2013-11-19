@@ -79,12 +79,9 @@ public class AddRuleFragment extends DialogFragment {
 				mDbHelper = new DBHelper(getActivity());
 				SQLiteDatabase db = mDbHelper.getWritableDatabase();
 				
-//				SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-				long startTime = startTimePicker.getCurrentHour()*60 + startTimePicker.getCurrentMinute();
-				long endTime = endTimePicker.getCurrentHour()*60 + endTimePicker.getCurrentMinute();
+				long startTime = (startTimePicker.getCurrentHour()*60 + startTimePicker.getCurrentMinute())*60*1000;
+				long endTime = (endTimePicker.getCurrentHour()*60 + endTimePicker.getCurrentMinute())*60*1000;
 				
-//				Date startDate = new Date(0, 0, 0, startTimePicker.getCurrentHour(), startTimePicker.getCurrentMinute());
-//				Date endDate = new Date(0, 0, 0, endTimePicker.getCurrentHour(), endTimePicker.getCurrentMinute());
 				ContentValues values = new ContentValues();
 				values.put(Rule.KEY_STARTDATE, startTime);
 				values.put(Rule.KEY_ENDDATE, endTime);

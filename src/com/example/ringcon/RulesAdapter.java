@@ -48,18 +48,19 @@ public class RulesAdapter extends BaseAdapter {
 			view = lInflater.inflate(R.layout.list_item, parent, false);
 		}
 
-		Rule r = getRule(position);
+		Rule rule = getRule(position);
 
-		SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat simpleDate = new SimpleDateFormat("HH:mm");
+		
 
 		((TextView) view.findViewById(R.id.startDate)).setText(simpleDate
-				.format(r.getStartDate()));
+				.format(rule.getStartDate()));
 		((TextView) view.findViewById(R.id.finishDate)).setText(simpleDate
-				.format(r.getFinishDate()));
+				.format(rule.getFinishDate()));
 		CheckBox cbBuy = (CheckBox) view.findViewById(R.id.isActive);
 		cbBuy.setOnCheckedChangeListener(myCheckChangList);
 		cbBuy.setTag(position);
-		cbBuy.setChecked(r.isActive());
+		cbBuy.setChecked(rule.isActive());
 		return view;
 	}
 
