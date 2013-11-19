@@ -39,7 +39,7 @@ public class SilanceManagerReceiver extends BroadcastReceiver {
 
 	public void setRule(Context context, Rule rule) {
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		
+
 		
 		Intent intent = new Intent(context, SilanceManagerReceiver.class);
 		intent.putExtra(KEY_RULE, rule);

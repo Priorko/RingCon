@@ -7,25 +7,21 @@
     <CheckBox
         android:id="@+id/isActive"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="isActive"
-       />
+        android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/startDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="startDate" />
+        android:paddingRight="10dp"
+        android:text="@string/app_name"/>
     <TextView
         android:id="@+id/finishDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="finishDate" />
+        android:text="@string/app_name"/>
     <TextView
         android:id="@+id/weekDays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="weekDays" />
-
-    
-
+        android:text="@string/app_name"/>
 </LinearLayout>
