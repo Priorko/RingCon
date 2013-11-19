@@ -1,8 +1,6 @@
 package com.example.ringcon;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.content.Context;
 import android.view.LayoutInflater;

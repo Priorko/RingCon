@@ -21,7 +21,7 @@ import com.example.ringcon.sql.DBHelper;
 import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
 
-public class AddRuleFragment extends DialogFragment {
+public class RuleFragment extends DialogFragment {
 
 	ScrollView containerView;
 	DBHelper mDbHelper;
@@ -45,7 +45,7 @@ public class AddRuleFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		containerView = (ScrollView) inflater.inflate(R.layout.dailog_add_rule, null);
+		containerView = (ScrollView) inflater.inflate(R.layout.dailog_rule, null);
 		dayContainer = (LinearLayout) containerView.findViewById(R.id.dayContainer);
 		dayList = new ArrayList<ToggleButton>();
 		
@@ -86,7 +86,14 @@ public class AddRuleFragment extends DialogFragment {
 				if (getActivity() != null && MainActivity.class.isInstance(getActivity())) {
 					((MainActivity)getActivity()).refreshList();
 				}
-				AddRuleFragment.this.dismiss();
+				RuleFragment.this.dismiss();
+			}
+		});
+		
+		((Button) containerView.findViewById(R.id.cancel)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				RuleFragment.this.dismiss();
 			}
 		});
 		return containerView;
