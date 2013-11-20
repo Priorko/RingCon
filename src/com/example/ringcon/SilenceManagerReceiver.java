@@ -2,7 +2,6 @@ package com.example.ringcon;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -14,6 +13,7 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.util.Log;
 
 import com.example.ringcon.structure.Rule;
 import com.example.ringcon.utils.DateUtils;
@@ -45,10 +45,10 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 			boolean start = extras.getBoolean(KEY_START);
 			SharedPreferences prefs = context.getApplicationContext()
 					.getSharedPreferences(KEY_PREFERENCES, Context.MODE_PRIVATE);
-			int volumeLevel = am.getStreamVolume(AudioManager.STREAM_RING);
+			int volumeLevel = prefs.getInt(KEY_VOLUME_LEVEL, 0);
 
 			if (start) {
-//				am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+				volumeLevel = am.getStreamVolume(AudioManager.STREAM_RING);
 				am.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
 				prefs.edit().putInt(KEY_VOLUME_LEVEL, volumeLevel).commit();
 			} else {
@@ -68,8 +68,6 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 		
 		// get today's date
 		Calendar calendarToday = Calendar.getInstance();
-		TimeZone tz = TimeZone.getDefault();
-		calendarToday.add(Calendar.MILLISECOND, tz.getOffset(calendarToday.getTimeInMillis()));
 		long currentTime = calendarToday.getTimeInMillis();
 
 		Calendar now = Calendar.getInstance();
@@ -77,7 +75,6 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 		now.set(Calendar.SECOND, 0);
 		now.set(Calendar.MINUTE, 0);
 		now.set(Calendar.HOUR_OF_DAY, 0);
-		now.add(Calendar.MILLISECOND, tz.getOffset(now.getTimeInMillis()));
 
 		for (int i = 0; i < 7; i++) {
 			calendarToday.add(Calendar.DAY_OF_YEAR, 1);
@@ -89,13 +86,14 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 				if (startdate < currentTime) {
 					startdate += AlarmManager.INTERVAL_DAY * 7;
 				}
+				currentTime = System.currentTimeMillis();
 				PendingIntent startPendingIntent = PendingIntent.getBroadcast(context, (int) rule.getId(), startIntent, 0);
 				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startdate, AlarmManager.INTERVAL_DAY * 7 , startPendingIntent);
 
 				Intent finishIntent = new Intent(context, SilenceManagerReceiver.class);
 				finishIntent.putExtra(KEY_START, false);
 				long finishdate = startdate - rule.getStartDate() + rule.getFinishDate();
-				PendingIntent finishPendingIntent = PendingIntent.getBroadcast(context, (int) rule.getId(), finishIntent, 0);
+				PendingIntent finishPendingIntent = PendingIntent.getBroadcast(context, - (int) rule.getId(), finishIntent, 0);
 				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, finishdate, AlarmManager.INTERVAL_DAY * 7 , finishPendingIntent);
 			}
 		}
