@@ -58,9 +58,8 @@ public class MainActivity extends FragmentActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, 
 					int position, long id) {
-
 				AddRuleFragment mContent = new AddRuleFragment();
-				Rule rule = ruleList.get(position);
+				Rule rule = (Rule)view.getTag();
 				Bundle b = new Bundle();
 				b.putSerializable("rule", rule);
 				mContent.setArguments(b);
@@ -70,17 +69,19 @@ public class MainActivity extends FragmentActivity {
 	}
 	
 	public void onDelete(View v) {
-		new SQLiteAdapter(this).removeRule(Long.parseLong(v.getTag().toString()));
+		Rule rule = (Rule) v.getTag();
+		silanceManager.cancelAlarm(this.getApplicationContext(), rule);
+		new SQLiteAdapter(this).removeRule(rule.getId());
 		refreshList();
 	}
 
-	public void onRemoveRule(View v) {
-		Rule rule = (Rule) v.getTag();
-		silanceManager.cancelAlarm(this.getApplicationContext(), rule);
-		boolean oo = sqliteAdapter.removeRule(rule.getId());
-		refreshList();
-		
-	}
+//	public void onRemoveRule(View v) {
+//		Rule rule = (Rule) v.getTag();
+//		silanceManager.cancelAlarm(this.getApplicationContext(), rule);
+//		boolean oo = sqliteAdapter.removeRule(rule.getId());
+//		refreshList();
+//		
+//	}
 
 	public void setRule(Rule rule) {
 		if (silanceManager != null) {

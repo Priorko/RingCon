@@ -41,7 +41,7 @@
         android:text="@string/debug_text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/removeRule"
         android:layout_width="@dimen/icon_size"
         android:layout_height="wrap_content"
@@ -52,13 +52,5 @@
         android:focusable="false"
         android:onClick="onDelete"/>
 
-    <Button
-        android:id="@+id/editRule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@id/removeRule"
-        android:text="@string/editBtn" />
 
 </RelativeLayout>

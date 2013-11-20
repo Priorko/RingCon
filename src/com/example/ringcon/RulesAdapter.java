@@ -51,11 +51,11 @@ public class RulesAdapter extends BaseAdapter {
 		}
 		
 		Rule rule = getRule(position);
-		view.setTag(rule.getId());
+		view.setTag(rule);
 		((TextView) view.findViewById(R.id.startDate)).setText(DateUtils.getTime(rule.getStartDate()));
 		((TextView) view.findViewById(R.id.finishDate)).setText(DateUtils.getTime(rule.getFinishDate()));
 		((TextView) view.findViewById(R.id.weekDays)).setText(DateUtils.getDays(rule.getWeekdays()));
-		((ImageView)view.findViewById(R.id.removeRule)).setTag(rule.getId());
+		((ImageView)view.findViewById(R.id.removeRule)).setTag(rule);
 		CheckBox cbBuy = (CheckBox) view.findViewById(R.id.isActive);
 		
 		cbBuy.setOnCheckedChangeListener(myCheckChangList);
