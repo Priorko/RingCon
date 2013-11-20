@@ -1,6 +1,7 @@
 package com.example.ringcon;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -56,7 +57,16 @@ public class AddRuleFragment extends DialogFragment {
 		dayContainer = (LinearLayout) containerView.findViewById(R.id.dayContainer);
 		startTimePicker = (TimePicker) containerView.findViewById(R.id.startTime);
 		endTimePicker = (TimePicker) containerView.findViewById(R.id.endTime);
-
+		
+		startTimePicker.setIs24HourView(true);
+		endTimePicker.setIs24HourView(true);
+		
+		Calendar c = Calendar.getInstance();
+		startTimePicker.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+		startTimePicker.setCurrentMinute(c.get(Calendar.MINUTE));
+		endTimePicker.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+		endTimePicker.setCurrentMinute(c.get(Calendar.MINUTE));
+		
 		String[] days = getResources().getStringArray(R.array.days);
 		for(int i=0; i<days.length; i++){
 			ToggleButton tb = new ToggleButton(getActivity());
@@ -69,9 +79,7 @@ public class AddRuleFragment extends DialogFragment {
 			dayList.add(tb);
 		}
 		
-		startTimePicker.setIs24HourView(true);
-		endTimePicker.setIs24HourView(true);
-		
+
 		if(mRule != null)
 			initializeData(mRule);
 

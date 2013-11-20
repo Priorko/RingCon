@@ -7,6 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -15,6 +16,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
+            android:baselineAligned="true"
             android:weightSum="2" >
 
             <LinearLayout
@@ -62,25 +64,28 @@
             android:layout_below="@id/timeLayout"
             android:orientation="horizontal"
             android:paddingTop="5dp" />
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
+        
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/dayContainer"
-            android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
-            android:text="@string/cancelBtn" />
-
-        <Button
-            android:id="@+id/addRule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/dayContainer"
-            android:layout_toLeftOf="@id/cancel"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/apply_rule" />
-
+            android:layout_centerHorizontal="true"
+            android:weightSum="2">
+	        <Button
+	            android:id="@+id/cancel"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.5"
+	            android:text="@string/cancelBtn" />
+	
+	        <Button
+	            android:id="@+id/addRule"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1.5"
+	            android:text="@string/apply_rule" />
+        </LinearLayout>
         
     </RelativeLayout>
 

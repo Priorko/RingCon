@@ -3,7 +3,9 @@ package com.example.ringcon;
 import java.util.ArrayList;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,7 +13,7 @@ import android.widget.ListView;
 import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
 
 	public final static String ADD_RULE = "add_rule";
 	public final static String EDIT_RULE = "edit_rule";
@@ -31,21 +33,25 @@ public class MainActivity extends FragmentActivity {
 		
 		refreshList();
 	}
-
-	public void onAddRule(View v) {
-		
-//		Context context = this.getApplicationContext();
-//
-//    	if (silanceManager != null) {
-//    		Rule rule = new Rule(1384797600, 1384798900, 63, true);
-//    		rule.setId(12);
-//    		silanceManager.setRule(context, rule);
-//    	} else {
-//    		Toast.makeText(context, "Crap! Can't do this :(", Toast.LENGTH_SHORT).show();
-//    	}
-		AddRuleFragment mContent = new AddRuleFragment();
-		mContent.show(getSupportFragmentManager(), ADD_RULE);
-
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+			case R.id.refresh:
+				refreshList();
+				break;
+			case R.id.addRule:
+				AddRuleFragment mContent = new AddRuleFragment();
+				mContent.show(getSupportFragmentManager(), ADD_RULE);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void refreshList() {
@@ -74,18 +80,6 @@ public class MainActivity extends FragmentActivity {
 		new SQLiteAdapter(this).removeRule(rule.getId());
 		refreshList();
 	}
-	
-	public void onRefresh(View v){
-		refreshList();
-	}
-
-//	public void onRemoveRule(View v) {
-//		Rule rule = (Rule) v.getTag();
-//		silanceManager.cancelAlarm(this.getApplicationContext(), rule);
-//		boolean oo = sqliteAdapter.removeRule(rule.getId());
-//		refreshList();
-//		
-//	}
 
 	public void setRule(Rule rule) {
 		if (silanceManager != null) {
