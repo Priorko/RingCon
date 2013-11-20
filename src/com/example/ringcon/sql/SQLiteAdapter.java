@@ -32,7 +32,7 @@ public class SQLiteAdapter {
 
 	public boolean editRule(long id, Rule rule) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
-		return db.update(DBHelper.TABLE_NAME, rule.getCV(), Rule.KEY_ID + "=" + rule.getId(), null) >= 0;
+		return db.update(DBHelper.TABLE_NAME, rule.getCV(), Rule.KEY_ID + "=" + id, null) >= 0;
 	}
 
 	public ArrayList<Rule> getRules() {

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.ringcon.sql.DBHelper;
@@ -52,10 +50,10 @@ public class AddRuleFragment extends DialogFragment {
 		if(getArguments() != null && getArguments().containsKey("rule"))
 			mRule = (Rule)getArguments().getSerializable("rule");
 
-		containerView = (ScrollView) inflater.inflate(R.layout.dailog_rule, null);
-		dayContainer = (LinearLayout) containerView.findViewById(R.id.dayContainer);
 		dayList = new ArrayList<ToggleButton>();
 		
+		containerView = (ScrollView) inflater.inflate(R.layout.dailog_rule, null);
+		dayContainer = (LinearLayout) containerView.findViewById(R.id.dayContainer);
 		startTimePicker = (TimePicker) containerView.findViewById(R.id.startTime);
 		endTimePicker = (TimePicker) containerView.findViewById(R.id.endTime);
 
@@ -93,7 +91,6 @@ public class AddRuleFragment extends DialogFragment {
 				if(getTag().equals(MainActivity.ADD_RULE)){
 					rule.setId(new SQLiteAdapter(getActivity()).addRule(rule));
 					if (getActivity() != null && MainActivity.class.isInstance(getActivity())) {
-						((MainActivity)getActivity()).refreshList();
 						if (rule.getId() >= 0) {
 							rule.setId(rule.getId());
 							((MainActivity)getActivity()).setRule(rule);
@@ -101,10 +98,9 @@ public class AddRuleFragment extends DialogFragment {
 					}
 				}
 				else if(getTag().equals(MainActivity.EDIT_RULE)){
-					boolean flag = new SQLiteAdapter(getActivity()).editRule(mRule.getId(), rule);
-					Toast.makeText(getActivity(),  flag ? "true" : "false", Toast.LENGTH_LONG).show(); 
+					new SQLiteAdapter(getActivity()).editRule(mRule.getId(), rule);
 				}
-
+				((MainActivity)getActivity()).refreshList();
 				AddRuleFragment.this.dismiss();
 			}
 		});
@@ -112,6 +108,7 @@ public class AddRuleFragment extends DialogFragment {
 		((Button) containerView.findViewById(R.id.cancel)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				((MainActivity)getActivity()).refreshList();
 				AddRuleFragment.this.dismiss();
 			}
 		});

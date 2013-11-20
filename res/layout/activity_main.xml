@@ -8,19 +8,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <Button
-        android:id="@+id/add"
+    <ImageView
+        android:id="@+id/applyRule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="add"
-        android:onClick="onAddRule" />
+        android:layout_alignParentRight="true"
+        android:onClick="onAddRule"
+        android:contentDescription="@string/apply_rule"
+        android:src="@drawable/add_rule"/>
+    
+    <ImageView
+        android:id="@+id/refreshIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/applyRule"
+        android:layout_marginRight="10dp"
+        android:onClick="onRefresh"
+        android:contentDescription="@string/refresh"
+        android:src="@drawable/refresh"/>
 
     <ListView
         android:id="@+id/ruleLv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/add"
+        android:layout_below="@id/applyRule"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

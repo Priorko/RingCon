@@ -49,7 +49,6 @@ public class DateUtils {
 			if(minutes<10)
 				text.append("0");
 			text.append(minutes);
-			millis %= MINUTE;
 		}
 		return text.toString();
 	}
