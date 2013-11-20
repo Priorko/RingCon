@@ -83,24 +83,18 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 			calendarToday.add(Calendar.DAY_OF_YEAR, 1);
 			int todaysDay = calendarToday.get(Calendar.DAY_OF_WEEK);
 			if (ruleDays.indexOf(todaysDay) >= 0) {
-				
 				Intent startIntent = new Intent(context, SilenceManagerReceiver.class);
 				startIntent.putExtra(KEY_START, true);
 				long startdate = now.getTimeInMillis() + rule.getStartDate();
 				if (startdate < currentTime) {
 					startdate += AlarmManager.INTERVAL_DAY * 7;
 				}
-				startdate /=1000;
 				PendingIntent startPendingIntent = PendingIntent.getBroadcast(context, (int) rule.getId(), startIntent, 0);
 				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startdate, AlarmManager.INTERVAL_DAY * 7 , startPendingIntent);
 
 				Intent finishIntent = new Intent(context, SilenceManagerReceiver.class);
 				finishIntent.putExtra(KEY_START, false);
-				long finishdate = now.getTimeInMillis() + rule.getFinishDate();
-				if (finishdate < System.currentTimeMillis()) {
-					finishdate += AlarmManager.INTERVAL_DAY * 7;
-				}
-				finishdate /= 1000;
+				long finishdate = startdate - rule.getStartDate() + rule.getFinishDate();
 				PendingIntent finishPendingIntent = PendingIntent.getBroadcast(context, (int) rule.getId(), finishIntent, 0);
 				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, finishdate, AlarmManager.INTERVAL_DAY * 7 , finishPendingIntent);
 			}
