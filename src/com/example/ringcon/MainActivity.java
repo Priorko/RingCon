@@ -74,6 +74,10 @@ public class MainActivity extends FragmentActivity {
 		new SQLiteAdapter(this).removeRule(rule.getId());
 		refreshList();
 	}
+	
+	public void onRefresh(View v){
+		refreshList();
+	}
 
 //	public void onRemoveRule(View v) {
 //		Rule rule = (Rule) v.getTag();

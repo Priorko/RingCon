@@ -13,6 +13,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
 import com.example.ringcon.utils.DateUtils;
 
@@ -71,7 +72,9 @@ public class RulesAdapter extends BaseAdapter {
 	OnCheckedChangeListener myCheckChangList = new OnCheckedChangeListener() {
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
-			getRule((Integer) buttonView.getTag()).setActive(isChecked);
+			Rule rule = getRule((Integer) buttonView.getTag());
+			rule.setActive(isChecked);
+			new SQLiteAdapter(ctx).editRule(rule.getId(), rule);
 		}
 	};
 
