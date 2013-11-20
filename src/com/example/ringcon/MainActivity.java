@@ -17,12 +17,18 @@ public class MainActivity extends FragmentActivity {
 	public final static String EDIT_RULE = "edit_rule";
 	ListView ruleLv;
 	SilenceManagerReceiver silanceManager;
-	
+	SQLiteAdapter sqliteAdapter;
+	RulesAdapter ruleAdapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		sqliteAdapter = new SQLiteAdapter(this);
+		silanceManager = new SilenceManagerReceiver();
 		ruleLv = (ListView) findViewById(R.id.ruleLv);
+		
 		refreshList();
 	}
 
@@ -39,11 +45,13 @@ public class MainActivity extends FragmentActivity {
 //    	}
 		AddRuleFragment mContent = new AddRuleFragment();
 		mContent.show(getSupportFragmentManager(), ADD_RULE);
+
 	}
 
 	public void refreshList() {
 		final ArrayList<Rule> ruleList = new SQLiteAdapter(this).getRules();
 		RulesAdapter ruleAdapter = new RulesAdapter(this, ruleList);
+		ruleAdapter = new RulesAdapter(this, ruleList);
 		ruleLv.setAdapter(ruleAdapter);
 		ruleLv.setEnabled(true);
 		ruleLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,7 +73,15 @@ public class MainActivity extends FragmentActivity {
 		new SQLiteAdapter(this).removeRule(Long.parseLong(v.getTag().toString()));
 		refreshList();
 	}
-	
+
+	public void onRemoveRule(View v) {
+		Rule rule = (Rule) v.getTag();
+		silanceManager.cancelAlarm(this.getApplicationContext(), rule);
+		boolean oo = sqliteAdapter.removeRule(rule.getId());
+		refreshList();
+		
+	}
+
 	public void setRule(Rule rule) {
 		if (silanceManager != null) {
 			silanceManager.setRule(this.getApplicationContext(), rule);

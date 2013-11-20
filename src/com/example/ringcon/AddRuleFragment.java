@@ -51,6 +51,7 @@ public class AddRuleFragment extends DialogFragment {
 		mRule = null;
 		if(getArguments() != null && getArguments().containsKey("rule"))
 			mRule = (Rule)getArguments().getSerializable("rule");
+
 		containerView = (ScrollView) inflater.inflate(R.layout.dailog_rule, null);
 		dayContainer = (LinearLayout) containerView.findViewById(R.id.dayContainer);
 		dayList = new ArrayList<ToggleButton>();
@@ -85,6 +86,7 @@ public class AddRuleFragment extends DialogFragment {
 						day += (int)Math.pow(2, i);
 				}
 
+				
 				long startTime = (startTimePicker.getCurrentHour()*60 + startTimePicker.getCurrentMinute())*60*1000;
 				long endTime = (endTimePicker.getCurrentHour()*60 + endTimePicker.getCurrentMinute())*60*1000;
 				
@@ -96,8 +98,16 @@ public class AddRuleFragment extends DialogFragment {
 					Toast.makeText(getActivity(),  flag ? "true" : "false", Toast.LENGTH_LONG).show(); 
 				}
 				
+
+				long id = new SQLiteAdapter(getActivity()).addRule(rule);
+
 				if (getActivity() != null && MainActivity.class.isInstance(getActivity())) {
+					
 					((MainActivity)getActivity()).refreshList();
+					if (id >= 0) {
+						rule.setId(id);
+						((MainActivity)getActivity()).setRule(rule);
+					}
 				}
 				AddRuleFragment.this.dismiss();
 			}
