@@ -85,30 +85,33 @@ public class AddRuleFragment extends DialogFragment {
 					if(dayList.get(i).isChecked())
 						day += (int)Math.pow(2, i);
 				}
-
 				
 				long startTime = (startTimePicker.getCurrentHour()*60 + startTimePicker.getCurrentMinute())*60*1000;
 				long endTime = (endTimePicker.getCurrentHour()*60 + endTimePicker.getCurrentMinute())*60*1000;
 				
 				Rule rule = new Rule(startTime, endTime, day, true);
-				if(getTag().equals(MainActivity.ADD_RULE))
+				if(getTag().equals(MainActivity.ADD_RULE)){
 					rule.setId(new SQLiteAdapter(getActivity()).addRule(rule));
+					if (getActivity() != null && MainActivity.class.isInstance(getActivity())) {
+						((MainActivity)getActivity()).refreshList();
+						if (rule.getId() >= 0) {
+							rule.setId(rule.getId());
+							((MainActivity)getActivity()).setRule(rule);
+						}
+					}
+				}
 				else if(getTag().equals(MainActivity.EDIT_RULE)){
 					boolean flag = new SQLiteAdapter(getActivity()).editRule(mRule.getId(), rule);
 					Toast.makeText(getActivity(),  flag ? "true" : "false", Toast.LENGTH_LONG).show(); 
 				}
-				
 
-				long id = new SQLiteAdapter(getActivity()).addRule(rule);
-
-				if (getActivity() != null && MainActivity.class.isInstance(getActivity())) {
-					
-					((MainActivity)getActivity()).refreshList();
-					if (id >= 0) {
-						rule.setId(id);
-						((MainActivity)getActivity()).setRule(rule);
-					}
-				}
+				AddRuleFragment.this.dismiss();
+			}
+		});
+		
+		((Button) containerView.findViewById(R.id.cancel)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 				AddRuleFragment.this.dismiss();
 			}
 		});
