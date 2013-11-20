@@ -44,12 +44,14 @@ public class DateUtils {
 			text.append(millis / HOUR).append(":");
 			millis %= HOUR;
 		}
-		if (millis > MINUTE) {
+		if (millis >= MINUTE) {
 			long minutes = millis / MINUTE;
 			if(minutes<10)
 				text.append("0");
 			text.append(minutes);
 		}
+		if(millis < MINUTE)
+			text.append("00");
 		return text.toString();
 	}
 	
