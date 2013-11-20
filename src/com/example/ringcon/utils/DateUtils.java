@@ -26,7 +26,7 @@ public class DateUtils {
 		ArrayList<Integer> weekDays = new ArrayList<Integer>();
 
 		if (days == 0) {
-			return null;
+			return new ArrayList<Integer>();
 		}
 		for (int i = 6; i >= 0; i--) {
 			if (Math.pow(2, i) <= days) {
@@ -52,5 +52,18 @@ public class DateUtils {
 			millis %= MINUTE;
 		}
 		return text.toString();
+	}
+	
+	public static int getHours(long millis){
+		if (millis > HOUR) 
+			return (int)millis / HOUR;
+		return 0;
+	}
+	
+	public static int getMinutes(long millis){
+		millis %= HOUR;
+		if (millis > MINUTE) 
+			return (int)millis / MINUTE;
+		return 0;
 	}
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,15 +15,13 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.ringcon.sql.DBHelper;
 import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
-import com.example.ringcon.utils.DateUtils;
 
-public class AddRuleFragment extends DialogFragment {
+public class RuleFragment extends DialogFragment {
 
 	ScrollView containerView;
 	DBHelper mDbHelper;
@@ -33,7 +30,6 @@ public class AddRuleFragment extends DialogFragment {
 	
 	LinearLayout dayContainer;
 	ArrayList<ToggleButton> dayList;
-	Rule mRule;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,16 +44,14 @@ public class AddRuleFragment extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mRule = null;
-		if(getArguments() != null && getArguments().containsKey("rule"))
-			mRule = (Rule)getArguments().getSerializable("rule");
+
 		containerView = (ScrollView) inflater.inflate(R.layout.dailog_rule, null);
 		dayContainer = (LinearLayout) containerView.findViewById(R.id.dayContainer);
 		dayList = new ArrayList<ToggleButton>();
 		
 		startTimePicker = (TimePicker) containerView.findViewById(R.id.startTime);
 		endTimePicker = (TimePicker) containerView.findViewById(R.id.endTime);
-
+		
 		String[] days = getResources().getStringArray(R.array.days);
 		for(int i=0; i<days.length; i++){
 			ToggleButton tb = new ToggleButton(getActivity());
@@ -72,9 +66,6 @@ public class AddRuleFragment extends DialogFragment {
 		
 		startTimePicker.setIs24HourView(true);
 		endTimePicker.setIs24HourView(true);
-		
-		if(mRule != null)
-			initializeData(mRule);
 
 		((Button) containerView.findViewById(R.id.addRule)).setOnClickListener(new OnClickListener() {
 			@Override
@@ -87,33 +78,24 @@ public class AddRuleFragment extends DialogFragment {
 
 				long startTime = (startTimePicker.getCurrentHour()*60 + startTimePicker.getCurrentMinute())*60*1000;
 				long endTime = (endTimePicker.getCurrentHour()*60 + endTimePicker.getCurrentMinute())*60*1000;
-				
+
 				Rule rule = new Rule(startTime, endTime, day, true);
-				if(getTag().equals(MainActivity.ADD_RULE))
-					rule.setId(new SQLiteAdapter(getActivity()).addRule(rule));
-				else if(getTag().equals(MainActivity.EDIT_RULE)){
-					boolean flag = new SQLiteAdapter(getActivity()).editRule(mRule.getId(), rule);
-					Toast.makeText(getActivity(),  flag ? "true" : "false", Toast.LENGTH_LONG).show(); 
-				}
-				
+
+				new SQLiteAdapter(getActivity()).addRule(rule);
+
 				if (getActivity() != null && MainActivity.class.isInstance(getActivity())) {
 					((MainActivity)getActivity()).refreshList();
 				}
-				AddRuleFragment.this.dismiss();
+				RuleFragment.this.dismiss();
+			}
+		});
+		
+		((Button) containerView.findViewById(R.id.cancel)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				RuleFragment.this.dismiss();
 			}
 		});
 		return containerView;
-	}
-	
-	private void initializeData(Rule rule){
-		startTimePicker.setCurrentHour(DateUtils.getHours(rule.getStartDate()));
-		startTimePicker.setCurrentMinute(DateUtils.getMinutes(rule.getStartDate()));
-		endTimePicker.setCurrentHour(DateUtils.getHours(rule.getFinishDate()));
-		endTimePicker.setCurrentMinute(DateUtils.getMinutes(rule.getFinishDate()));
-		
-		ArrayList<Integer> weekDays = DateUtils.getWeekDays(rule.getWeekdays());
-		for(int i=0; i<weekDays.size(); i++){
-			dayList.get(weekDays.get(i)-1).setChecked(true);
-		}
 	}
 }

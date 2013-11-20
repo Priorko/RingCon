@@ -21,7 +21,7 @@ public class Rule implements Serializable {
 	private int weekdays;
 	private long startDate;
 	private long finishDate;
-	private int id;
+	private long id;
 	private boolean active;
 
 	public Rule (long sDate, long fDate, int repeating, boolean isOn){
@@ -29,6 +29,12 @@ public class Rule implements Serializable {
 		finishDate = fDate;
 		active = isOn;
 		weekdays = repeating;
+	}
+	
+	public Rule (int id, long sDate, long fDate, int repeating, boolean isOn){
+		this(sDate, fDate, repeating, isOn);
+		this.id = id;
+		
 	}
 
 	public Rule (Date sDate, Date fDate, int repeating, boolean isOn){
@@ -38,11 +44,11 @@ public class Rule implements Serializable {
 		weekdays = repeating;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

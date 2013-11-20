@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
     <CheckBox
         android:id="@+id/isActive"
@@ -9,41 +9,56 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:text="@string/debug_text"/>
-    
+        android:focusable="false"
+        android:text="@string/debug_text" />
+
     <TextView
         android:id="@+id/startDate"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/isActive"
         android:layout_marginLeft="10dp"
-        android:text="@string/debug_text"/>
-    
+        android:layout_toRightOf="@id/isActive"
+        android:text="@string/debug_text" />
+
     <TextView
         android:id="@+id/finishDate"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/startDate"
         android:layout_marginLeft="10dp"
-        android:text="@string/debug_text"/>
-    
+        android:layout_toRightOf="@id/startDate"
+        android:text="@string/debug_text" />
+
     <TextView
         android:id="@+id/weekDays"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/finishDate"
-        android:layout_marginLeft="20dp"
-        android:text="@string/debug_text"/>
+        android:layout_below="@id/startDate"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/isActive"
+        android:text="@string/debug_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/removeRule"
         android:layout_width="@dimen/icon_size"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:src="@drawable/remove_rule" />
-    
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/debug_text"
+        android:src="@drawable/remove_rule"
+        android:focusable="false"
+        android:onClick="onDelete"/>
+
+    <Button
+        android:id="@+id/editRule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/removeRule"
+        android:text="@string/editBtn" />
+
 </RelativeLayout>
