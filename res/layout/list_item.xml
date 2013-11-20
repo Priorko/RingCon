@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
+        android:focusable="false"
         android:text="@string/debug_text" />
 
     <TextView
@@ -47,7 +48,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/debug_text"
-        android:src="@drawable/remove_rule" />
+        android:src="@drawable/remove_rule"
+        android:focusable="false"
+        android:onClick="onDelete"/>
 
     <Button
         android:id="@+id/editRule"

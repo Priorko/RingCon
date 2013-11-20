@@ -30,7 +30,7 @@ public class SQLiteAdapter {
 		return db.delete(DBHelper.TABLE_NAME, Rule.KEY_ID + "=" + id, null) >= 0;
 	}
 
-	public boolean editRule(int id, Rule rule) {
+	public boolean editRule(long id, Rule rule) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		return db.update(DBHelper.TABLE_NAME, rule.getCV(), Rule.KEY_ID + "=" + rule.getId(), null) >= 0;
 	}
@@ -58,7 +58,7 @@ public class SQLiteAdapter {
 		}
 
 		while (cursor.moveToNext()) {
-			long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(Rule.KEY_ID));
+			int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(Rule.KEY_ID));
 			long startTime = cursor.getLong(cursor.getColumnIndexOrThrow(Rule.KEY_STARTDATE));
 			long endTime = cursor.getLong(cursor.getColumnIndexOrThrow(Rule.KEY_ENDDATE));
 			boolean isActive = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndexOrThrow(Rule.KEY_ACTIVE)));
@@ -73,7 +73,7 @@ public class SQLiteAdapter {
 			Log.d("isActive", ""+isActive);
 			Log.d("weekDays", ""+weekDays);
 			
-			Rule rule = new Rule(startTime, endTime, weekDays, isActive);
+			Rule rule = new Rule(itemId, startTime, endTime, weekDays, isActive);
 			ruleList.add(rule);
 		}
 		cursor.close();

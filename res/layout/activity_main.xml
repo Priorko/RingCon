@@ -9,6 +9,7 @@
     tools:context=".MainActivity" >
 
     <Button
+        android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -19,10 +20,7 @@
         android:id="@+id/ruleLv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp" >
-    </ListView>
-
-    
+        android:layout_below="@id/add"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -30,6 +30,12 @@ public class Rule implements Serializable {
 		active = isOn;
 		weekdays = repeating;
 	}
+	
+	public Rule (int id, long sDate, long fDate, int repeating, boolean isOn){
+		this(sDate, fDate, repeating, isOn);
+		this.id = id;
+		
+	}
 
 	public Rule (Date sDate, Date fDate, int repeating, boolean isOn){
 		setStartDate(sDate);
