@@ -9,9 +9,8 @@
     <string name="apply_rule">Apply</string>
     <string name="start_time">Start time</string>
     <string name="end_time">End time</string>
-    <string name="editBtn">Edit</string>
-    <string name="cancelBtn">Cancel</string>
-
+    <string name="cancel">Cancel</string>
+    <string name="no_rule">No rules.</string>
     <string-array name="days">
         <item>Sun</item>
         <item>Mon</item>

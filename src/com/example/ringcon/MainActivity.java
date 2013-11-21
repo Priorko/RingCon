@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
@@ -72,6 +73,12 @@ public class MainActivity extends ActionBarActivity {
 				mContent.show(getSupportFragmentManager(), EDIT_RULE);
 			}
 		});
+		
+		TextView noRuleTv = (TextView) findViewById(R.id.noRuleTv);
+		if(ruleAdapter.getCount() == 0)
+			noRuleTv.setVisibility(View.VISIBLE);
+		else
+			noRuleTv.setVisibility(View.INVISIBLE);
 	}
 	
 	public void onDelete(View v) {
