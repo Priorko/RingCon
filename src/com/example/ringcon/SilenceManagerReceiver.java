@@ -13,8 +13,8 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.util.Log;
 
+import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
 import com.example.ringcon.utils.DateUtils;
 
@@ -40,6 +40,14 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 		AudioManager am = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
 
 		Bundle extras = intent.getExtras();
+		if (extras != null && extras.containsKey(KEY_RULE_ID)) {
+			long id = extras.getLong(KEY_RULE_ID);
+			Rule rule = new SQLiteAdapter(context).getRule(id);
+			if (!rule.isActive()) {
+				cancelAlarm(context, rule);
+				return;
+			}
+		}
 
 		if(extras != null && extras.containsKey(KEY_START)){
 			boolean start = extras.getBoolean(KEY_START);
@@ -63,6 +71,10 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 	}
 
 	public void setRule(Context context, Rule rule) {
+		if (!rule.isActive()) {
+			cancelAlarm(context, rule);
+			return;
+		}
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		ArrayList<Integer> ruleDays = DateUtils.getWeekDays(rule.getWeekdays());
 		
@@ -80,8 +92,10 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 			calendarToday.add(Calendar.DAY_OF_YEAR, 1);
 			int todaysDay = calendarToday.get(Calendar.DAY_OF_WEEK);
 			if (ruleDays.indexOf(todaysDay) >= 0) {
+// start rule action
 				Intent startIntent = new Intent(context, SilenceManagerReceiver.class);
 				startIntent.putExtra(KEY_START, true);
+				startIntent.putExtra(KEY_RULE_ID, rule.getId());
 				long startdate = now.getTimeInMillis() + rule.getStartDate();
 				if (startdate < currentTime) {
 					startdate += AlarmManager.INTERVAL_DAY * 7;
@@ -89,9 +103,10 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 				currentTime = System.currentTimeMillis();
 				PendingIntent startPendingIntent = PendingIntent.getBroadcast(context, (int) rule.getId(), startIntent, 0);
 				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startdate, AlarmManager.INTERVAL_DAY * 7 , startPendingIntent);
-
+// finish rule action
 				Intent finishIntent = new Intent(context, SilenceManagerReceiver.class);
 				finishIntent.putExtra(KEY_START, false);
+				finishIntent.putExtra(KEY_RULE_ID, rule.getId());
 				long finishdate = startdate - rule.getStartDate() + rule.getFinishDate();
 				PendingIntent finishPendingIntent = PendingIntent.getBroadcast(context, - (int) rule.getId(), finishIntent, 0);
 				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, finishdate, AlarmManager.INTERVAL_DAY * 7 , finishPendingIntent);
@@ -106,5 +121,4 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 		alarmManager.cancel(sender);
 	}
 
-	//TODO: add cancelrule + setrule after edit;
 }

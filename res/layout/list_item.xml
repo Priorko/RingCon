@@ -19,6 +19,9 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/isActive"
+        android:textColor="@color/light_blue"
+        android:textSize="30sp"
+        android:padding="10dp"
         android:text="@string/debug_text" />
 
     <TextView
@@ -28,6 +31,9 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/startDate"
+        android:textColor="@color/dark_blue"
+        android:textSize="30sp"
+        android:padding="10dp"
         android:text="@string/debug_text" />
 
     <TextView
@@ -39,16 +45,19 @@
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/isActive"
         android:text="@string/debug_text"
+        android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ImageView
         android:id="@+id/removeRule"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="10dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/debug_text"
-        android:src="@drawable/remove_rule"
+        android:src="@drawable/delete_button"
+        android:background="@drawable/remove_bck"
         android:focusable="false"
         android:onClick="onDelete"/>
 
