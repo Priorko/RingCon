@@ -45,6 +45,7 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 			Rule rule = new SQLiteAdapter(context).getRule(id);
 			if (!rule.isActive()) {
 				cancelAlarm(context, rule);
+				wakeLock.release();
 				return;
 			}
 		}

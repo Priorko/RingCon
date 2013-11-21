@@ -6,52 +6,51 @@
     <CheckBox
         android:id="@+id/isActive"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
         android:focusable="false"
         android:text="@string/debug_text" />
 
     <TextView
         android:id="@+id/startDate"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/isActive"
         android:textColor="@color/light_blue"
         android:textSize="30sp"
         android:padding="10dp"
+        android:includeFontPadding="false"
         android:text="@string/debug_text" />
 
     <TextView
         android:id="@+id/finishDate"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/startDate"
         android:textColor="@color/dark_blue"
         android:textSize="30sp"
         android:padding="10dp"
+        android:includeFontPadding="false"
         android:text="@string/debug_text" />
 
     <TextView
         android:id="@+id/weekDays"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/startDate"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/isActive"
         android:text="@string/debug_text"
-        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="10dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ImageView
         android:id="@+id/removeRule"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"

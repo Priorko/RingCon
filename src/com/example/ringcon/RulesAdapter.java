@@ -55,7 +55,9 @@ public class RulesAdapter extends BaseAdapter {
 		view.setTag(rule);
 		((TextView) view.findViewById(R.id.startDate)).setText(DateUtils.getTime(rule.getStartDate()));
 		((TextView) view.findViewById(R.id.finishDate)).setText(DateUtils.getTime(rule.getFinishDate()));
-		((TextView) view.findViewById(R.id.weekDays)).setText(DateUtils.getDays(rule.getWeekdays()));
+		String sDays = DateUtils.getDays(rule.getWeekdays());
+		((TextView) view.findViewById(R.id.weekDays)).setText(sDays.length() == 0 ? 
+				ctx.getResources().getString(R.string.no_days) : sDays);
 		((ImageView)view.findViewById(R.id.removeRule)).setTag(rule);
 		CheckBox cbBuy = (CheckBox) view.findViewById(R.id.isActive);
 		
@@ -75,6 +77,13 @@ public class RulesAdapter extends BaseAdapter {
 			Rule rule = getRule((Integer) buttonView.getTag());
 			rule.setActive(isChecked);
 			new SQLiteAdapter(ctx).editRule(rule.getId(), rule);
+
+			if (RulesAdapter.this.ctx != null && MainActivity.class.isInstance(RulesAdapter.this.ctx)) {
+				if (rule.getId() >= 0) {
+					rule.setId(rule.getId());
+					((MainActivity)RulesAdapter.this.ctx).setRule(rule);
+				}
+			}
 		}
 	};
 

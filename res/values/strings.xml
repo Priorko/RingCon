@@ -11,6 +11,9 @@
     <string name="end_time">End time</string>
     <string name="cancel">Cancel</string>
     <string name="no_rule">No rules.</string>
+    
+    <string name="no_days">No days range specified</string>
+    
     <string-array name="days">
         <item>Sun</item>
         <item>Mon</item>
