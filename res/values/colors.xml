@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00ffffff</color>
+
     <color name="light_blue">#ff3194de</color>
     <color name="dark_blue">#ff2b4151</color>
     <color name="light_blue_bck">#ff8cbce0</color>
-    
+
+    <color name="blue">#ff1090f3</color>
+
 </resources>
