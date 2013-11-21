@@ -53,9 +53,10 @@ public class RulesAdapter extends BaseAdapter {
 		
 		Rule rule = getRule(position);
 		view.setTag(rule);
-		((TextView) view.findViewById(R.id.startDate)).setText(DateUtils.getTime(rule.getStartDate()));
-		((TextView) view.findViewById(R.id.finishDate)).setText(DateUtils.getTime(rule.getFinishDate()));
-		String sDays = DateUtils.getDays(rule.getWeekdays());
+		DateUtils utils = new DateUtils(ctx);
+		((TextView) view.findViewById(R.id.startDate)).setText(utils.getTime(rule.getStartDate()));
+		((TextView) view.findViewById(R.id.finishDate)).setText(utils.getTime(rule.getFinishDate()));
+		String sDays = utils.getDays(rule.getWeekdays());
 		((TextView) view.findViewById(R.id.weekDays)).setText(sDays.length() == 0 ? 
 				ctx.getResources().getString(R.string.no_days) : sDays);
 		((ImageView)view.findViewById(R.id.removeRule)).setTag(rule);

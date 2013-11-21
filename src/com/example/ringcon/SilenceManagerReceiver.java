@@ -77,7 +77,7 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 			return;
 		}
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		ArrayList<Integer> ruleDays = DateUtils.getWeekDays(rule.getWeekdays());
+		ArrayList<Integer> ruleDays = new DateUtils(context).getWeekDays(rule.getWeekdays());
 		
 		// get today's date
 		Calendar calendarToday = Calendar.getInstance();

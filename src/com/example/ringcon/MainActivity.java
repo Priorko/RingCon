@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,6 +76,7 @@ public class MainActivity extends ActionBarActivity {
 		});
 		
 		TextView noRuleTv = (TextView) findViewById(R.id.noRuleTv);
+		//noRuleTv.setText(Html.fromHtml(getResources().getString(R.string.no_rule)));
 		if(ruleAdapter.getCount() == 0)
 			noRuleTv.setVisibility(View.VISIBLE);
 		else

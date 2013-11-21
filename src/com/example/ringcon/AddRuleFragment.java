@@ -35,8 +35,8 @@ public class AddRuleFragment extends DialogFragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-//		setRetainInstance(true);
-//		setStyle(DialogFragment.STYLE_NO_TITLE, R.style.SoleDialog);
+	//	setRetainInstance(true);
+		setStyle(DialogFragment.STYLE_NO_TITLE, R.style.SoleDialog);
 		
 		super.onCreate(savedInstanceState);
 		
@@ -121,7 +121,7 @@ public class AddRuleFragment extends DialogFragment {
 		endTimePicker.setCurrentHour(DateUtils.getHours(rule.getFinishDate()));
 		endTimePicker.setCurrentMinute(DateUtils.getMinutes(rule.getFinishDate()));
 		
-		ArrayList<Integer> weekDays = DateUtils.getWeekDays(rule.getWeekdays());
+		ArrayList<Integer> weekDays = new DateUtils(getActivity().getApplicationContext()).getWeekDays(rule.getWeekdays());
 		for(int i=0; i<weekDays.size(); i++){
 			dayList.get(weekDays.get(i)-1).setChecked(true);
 		}

@@ -20,7 +20,7 @@
         android:layout_toRightOf="@id/isActive"
         android:textColor="@color/light_blue"
         android:textSize="30sp"
-        android:padding="10dp"
+        android:padding="5dp"
         android:includeFontPadding="false"
         android:text="@string/debug_text" />
 
@@ -32,7 +32,7 @@
         android:layout_toRightOf="@id/startDate"
         android:textColor="@color/dark_blue"
         android:textSize="30sp"
-        android:padding="10dp"
+        android:padding="5dp"
         android:includeFontPadding="false"
         android:text="@string/debug_text" />
 
