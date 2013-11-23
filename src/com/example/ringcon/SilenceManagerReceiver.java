@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.util.Log;
 
 import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
@@ -82,35 +83,71 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 		// get today's date
 		Calendar calendarToday = Calendar.getInstance();
 		long currentTime = calendarToday.getTimeInMillis();
-
+		
 		Calendar now = Calendar.getInstance();
+		
 		now.set(Calendar.MILLISECOND, 0);
 		now.set(Calendar.SECOND, 0);
 		now.set(Calendar.MINUTE, 0);
 		now.set(Calendar.HOUR_OF_DAY, 0);
+		
+		if (ruleDays.size() == 0) {
+			long startTime=rule.getStartDate()+now.getTimeInMillis();
+			if (startTime<currentTime){
+				startTime+= AlarmManager.INTERVAL_DAY;
+			}
 
-		for (int i = 0; i < 7; i++) {
-			calendarToday.add(Calendar.DAY_OF_YEAR, 1);
-			int todaysDay = calendarToday.get(Calendar.DAY_OF_WEEK);
-			if (ruleDays.indexOf(todaysDay) >= 0) {
 // start rule action
-				Intent startIntent = new Intent(context, SilenceManagerReceiver.class);
-				startIntent.putExtra(KEY_START, true);
-				startIntent.putExtra(KEY_RULE_ID, rule.getId());
-				long startdate = now.getTimeInMillis() + rule.getStartDate();
-				if (startdate < currentTime) {
-					startdate += AlarmManager.INTERVAL_DAY * 7;
-				}
-				currentTime = System.currentTimeMillis();
-				PendingIntent startPendingIntent = PendingIntent.getBroadcast(context, (int) rule.getId(), startIntent, 0);
-				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startdate, AlarmManager.INTERVAL_DAY * 7 , startPendingIntent);
+			Intent startIntent = new Intent(context, SilenceManagerReceiver.class);
+			startIntent.putExtra(KEY_START, true);
+			startIntent.putExtra(KEY_RULE_ID, rule.getId());
+			long startdate = now.getTimeInMillis() + rule.getStartDate();
+			if (startdate < currentTime) {
+				startdate += AlarmManager.INTERVAL_DAY;
+			}
+			
+			currentTime = System.currentTimeMillis();
+			PendingIntent startPendingIntent = PendingIntent.getBroadcast(context, (int) rule.getId(), startIntent, 0);
+			
+			//Log.d("RingCon","Start  "+String.valueOf(startdate));
+			alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startdate, 0 , startPendingIntent);	
 // finish rule action
-				Intent finishIntent = new Intent(context, SilenceManagerReceiver.class);
-				finishIntent.putExtra(KEY_START, false);
-				finishIntent.putExtra(KEY_RULE_ID, rule.getId());
-				long finishdate = startdate - rule.getStartDate() + rule.getFinishDate();
-				PendingIntent finishPendingIntent = PendingIntent.getBroadcast(context, - (int) rule.getId(), finishIntent, 0);
-				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, finishdate, AlarmManager.INTERVAL_DAY * 7 , finishPendingIntent);
+			Intent finishIntent = new Intent(context, SilenceManagerReceiver.class);
+			finishIntent.putExtra(KEY_START, false);
+			finishIntent.putExtra(KEY_RULE_ID, rule.getId());
+			
+			long finishdate = startdate - rule.getStartDate() + rule.getFinishDate();
+			if (rule.getFinishDate()<rule.getStartDate()){
+				finishdate += AlarmManager.INTERVAL_DAY ;
+			}
+			//Log.d("RingCon","finish "+String.valueOf(finishdate));
+			PendingIntent finishPendingIntent = PendingIntent.getBroadcast(context, - (int) rule.getId(), finishIntent, 0);
+			alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, finishdate, 0 , finishPendingIntent);	
+
+		} else {
+			for (int i = 0; i < 7; i++) {
+				calendarToday.add(Calendar.DAY_OF_YEAR, 1);
+				int todaysDay = calendarToday.get(Calendar.DAY_OF_WEEK);
+				if (ruleDays.indexOf(todaysDay) >= 0) {
+	// start rule action
+					Intent startIntent = new Intent(context, SilenceManagerReceiver.class);
+					startIntent.putExtra(KEY_START, true);
+					startIntent.putExtra(KEY_RULE_ID, rule.getId());
+					long startdate = now.getTimeInMillis() + rule.getStartDate();
+					if (startdate < currentTime) {
+						startdate += AlarmManager.INTERVAL_DAY * 7;
+					}
+					currentTime = System.currentTimeMillis();
+					PendingIntent startPendingIntent = PendingIntent.getBroadcast(context, (int) rule.getId(), startIntent, 0);
+					alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startdate, AlarmManager.INTERVAL_DAY * 7 , startPendingIntent);
+	// finish rule action
+					Intent finishIntent = new Intent(context, SilenceManagerReceiver.class);
+					finishIntent.putExtra(KEY_START, false);
+					finishIntent.putExtra(KEY_RULE_ID, rule.getId());
+					long finishdate = startdate - rule.getStartDate() + rule.getFinishDate();
+					PendingIntent finishPendingIntent = PendingIntent.getBroadcast(context, - (int) rule.getId(), finishIntent, 0);
+					alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, finishdate, AlarmManager.INTERVAL_DAY * 7 , finishPendingIntent);
+				}
 			}
 		}
 	}
