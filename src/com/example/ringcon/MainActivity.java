@@ -89,6 +89,14 @@ public class MainActivity extends ActionBarActivity {
 		new SQLiteAdapter(this).removeRule(rule.getId());
 		refreshList();
 	}
+	public void onUnset(View v) {
+		Rule rule = (Rule) v.getTag();
+		silanceManager.cancelAlarm(this.getApplicationContext(), rule);
+		
+		new SQLiteAdapter(this).removeRule(rule.getId());
+		
+		refreshList();
+	}
 
 	public void setRule(Rule rule) {
 		if (silanceManager != null) {
