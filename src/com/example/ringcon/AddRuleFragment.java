@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
@@ -28,7 +29,7 @@ public class AddRuleFragment extends DialogFragment {
 	DBHelper mDbHelper;
 	TimePicker startTimePicker;
 	TimePicker endTimePicker;
-	
+	Spinner sModeSpinner;
 	LinearLayout dayContainer;
 	ArrayList<ToggleButton> dayList;
 	Rule mRule;
@@ -56,7 +57,8 @@ public class AddRuleFragment extends DialogFragment {
 		dayContainer = (LinearLayout) containerView.findViewById(R.id.dayContainer);
 		startTimePicker = (TimePicker) containerView.findViewById(R.id.startTime);
 		endTimePicker = (TimePicker) containerView.findViewById(R.id.endTime);
-
+		sModeSpinner = (Spinner) containerView.findViewById(R.id.sModeSpinner);
+		
 		String[] days = getResources().getStringArray(R.array.days);
 		for(int i=0; i<days.length; i++){
 			ToggleButton tb = new ToggleButton(getActivity());
@@ -86,8 +88,9 @@ public class AddRuleFragment extends DialogFragment {
 				
 				long startTime = (startTimePicker.getCurrentHour()*60 + startTimePicker.getCurrentMinute())*60*1000;
 				long endTime = (endTimePicker.getCurrentHour()*60 + endTimePicker.getCurrentMinute())*60*1000;
-				
-				Rule rule = new Rule(startTime, endTime, day, true);
+				int mode = 0;
+				mode = sModeSpinner.getSelectedItemPosition();
+				Rule rule = new Rule(startTime, endTime, day, mode, true);
 				if(getTag().equals(MainActivity.ADD_RULE)){
 					rule.setId(new SQLiteAdapter(getActivity()).addRule(rule));
 					if (getActivity() != null && MainActivity.class.isInstance(getActivity())) {
@@ -120,7 +123,7 @@ public class AddRuleFragment extends DialogFragment {
 		startTimePicker.setCurrentMinute(DateUtils.getMinutes(rule.getStartDate()));
 		endTimePicker.setCurrentHour(DateUtils.getHours(rule.getFinishDate()));
 		endTimePicker.setCurrentMinute(DateUtils.getMinutes(rule.getFinishDate()));
-		
+		sModeSpinner.setSelection(rule.getMode());
 		ArrayList<Integer> weekDays = new DateUtils(getActivity().getApplicationContext()).getWeekDays(rule.getWeekdays());
 		for(int i=0; i<weekDays.size(); i++){
 			dayList.get(weekDays.get(i)-1).setChecked(true);

@@ -2,8 +2,11 @@ package com.example.ringcon;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -13,7 +16,6 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.util.Log;
 
 import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
@@ -25,9 +27,21 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 	final public static String KEY_TIME = "time";
 	final public static String KEY_START = "start";
 	final public static String KEY_RULE_ID = "rule_id";
-
+	final public static String KEY_MODE = "mode";
 	final public static String KEY_PREFERENCES = "ring_prefs";
 	final public static String KEY_VOLUME_LEVEL = "volume";
+	
+	private OnRuleRefreshListener listener;
+
+	public OnRuleRefreshListener getListener() {
+		return listener;
+	}
+
+
+	public void setListener(OnRuleRefreshListener listener) {
+		this.listener = listener;
+	}
+
 
 	@SuppressLint("Wakelock")
 	@Override
@@ -36,14 +50,16 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 				.getSystemService(Context.POWER_SERVICE);
 		PowerManager.WakeLock wakeLock = powerManager.newWakeLock(
 				PowerManager.PARTIAL_WAKE_LOCK, "Silance control");
-
 		wakeLock.acquire();
 
 		AudioManager am = (AudioManager) context.getApplicationContext()
 				.getSystemService(Context.AUDIO_SERVICE);
 
 		Bundle extras = intent.getExtras();
-		if (extras != null && extras.containsKey(KEY_RULE_ID)) {
+
+		if (extras != null && extras.containsKey(KEY_START)
+				&& extras.containsKey(KEY_RULE_ID)) {
+			
 			long id = extras.getLong(KEY_RULE_ID);
 			Rule rule = new SQLiteAdapter(context).getRule(id);
 			if (!rule.isActive()) {
@@ -51,9 +67,7 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 				wakeLock.release();
 				return;
 			}
-		}
 
-		if (extras != null && extras.containsKey(KEY_START)) {
 			boolean start = extras.getBoolean(KEY_START);
 			SharedPreferences prefs = context
 					.getApplicationContext()
@@ -63,17 +77,40 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 			if (start) {
 				volumeLevel = am.getStreamVolume(AudioManager.STREAM_RING);
 				am.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
+				if (rule.getMode()==1){
+					am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+				}
+				
+
+				//
+				// AudioManager.RINGER_MODE_SILENT;
+
+				// am.setStreamVolume(streamType, index, flags)
 				prefs.edit().putInt(KEY_VOLUME_LEVEL, volumeLevel).commit();
 			} else {
 				if (am.getStreamVolume(AudioManager.STREAM_RING) == 0) {
 					am.setStreamVolume(AudioManager.STREAM_RING, volumeLevel, 0);
 				}
+				if (rule.getMode()==1){
+					am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+				}
+				
+				if (rule.getWeekdays() == 0) {
+					rule.setActive(false);
+					new SQLiteAdapter(context).editRule(id, rule);
+					if (listener != null) {
+						listener.refreshRuleList();
+					}
+				}
 			}
+
 		}
+		
 
 		// Release the lock
 		wakeLock.release();
 	}
+
 
 	public void setRule(Context context, Rule rule) {
 		if (!rule.isActive()) {
@@ -97,7 +134,7 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 		now.set(Calendar.HOUR_OF_DAY, 0);
 
 		if (ruleDays.size() == 0) {
-			
+
 			// start rule action
 			long startdate = now.getTimeInMillis() + rule.getStartDate();
 			if (startdate < currentTime) {

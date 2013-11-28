@@ -16,32 +16,36 @@ public class Rule implements Serializable {
 	public static final String KEY_ENDDATE = "enddate";
 	public static final String KEY_ACTIVE = "active";
 	public static final String KEY_WEEKDAYS = "weekdays";
+	public static final String KEY_MODE = "mode";
 	public static final String KEY_ID = "id";
 
 	private int weekdays;
+	private int mode;
 	private long startDate;
 	private long finishDate;
 	private long id;
 	private boolean active;
 
-	public Rule (long sDate, long fDate, int repeating, boolean isOn){
+	public Rule (long sDate, long fDate, int repeating, int mode, boolean isOn){
 		startDate = sDate;
 		finishDate = fDate;
 		active = isOn;
 		weekdays = repeating;
+		this.mode=mode;
 	}
 	
-	public Rule (int id, long sDate, long fDate, int repeating, boolean isOn){
-		this(sDate, fDate, repeating, isOn);
+	public Rule (int id, long sDate, long fDate, int repeating, int mode, boolean isOn){
+		this(sDate, fDate, repeating, mode, isOn);
 		this.id = id;
-		
+		this.mode=mode;
 	}
 
-	public Rule (Date sDate, Date fDate, int repeating, boolean isOn){
+	public Rule (Date sDate, Date fDate, int repeating, int mode, boolean isOn){
 		setStartDate(sDate);
 		setFinishDate(fDate);
 		active = isOn;
 		weekdays = repeating;
+		this.mode = mode;
 	}
 
 	public long getId() {
@@ -99,6 +103,7 @@ public class Rule implements Serializable {
 		cv.put(KEY_STARTDATE, String.valueOf(this.startDate));
 		cv.put(KEY_ENDDATE, String.valueOf(this.finishDate));
 		cv.put(KEY_WEEKDAYS, String.valueOf(this.weekdays));
+		cv.put(KEY_MODE, String.valueOf(this.mode));
 		cv.put(KEY_ACTIVE, String.valueOf(this.active));
 		return cv;
 	}
@@ -109,11 +114,16 @@ public class Rule implements Serializable {
 		cv.put(KEY_STARTDATE, String.valueOf(this.startDate));
 		cv.put(KEY_ENDDATE, String.valueOf(this.finishDate));
 		cv.put(KEY_WEEKDAYS, String.valueOf(this.weekdays));
+		cv.put(KEY_MODE, String.valueOf(this.mode));
 		cv.put(KEY_ACTIVE, String.valueOf(this.active));
 		return cv;
 	}
 
 	public ArrayList<Integer> getArrayOfWeekDays() {
 		return DateUtils.getWeekDays(this.weekdays);
+	}
+
+	public int getMode() {
+		return mode;
 	}
 }

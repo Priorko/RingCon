@@ -87,6 +87,9 @@ public class RulesAdapter extends BaseAdapter {
 			}
 		}
 	};
+	private class ViewHolder {
+		//public final 
+	}
 
 }
 

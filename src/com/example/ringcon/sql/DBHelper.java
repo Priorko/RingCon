@@ -17,6 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			// repeating : int; => Mon = 1, Tue = 2, Wed = 4, Thu = 8 ... 
 			// so if repeating = 17, that is Friday & Monday (16 + 1);
 			+ Rule.KEY_WEEKDAYS + " INTEGER, "
+			+ Rule.KEY_MODE + " INTEGER, "
 			+ Rule.KEY_ACTIVE + " BOOL" + ");";
 	
 	public static final String DB_NAME = "ringcon";

@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
 
-public class MainActivity extends ActionBarActivity {
-
+public class MainActivity extends ActionBarActivity implements OnRuleRefreshListener{
+//	static boolean active = false;
 	public final static String ADD_RULE = "add_rule";
 	public final static String EDIT_RULE = "edit_rule";
 	ListView ruleLv;
@@ -101,6 +101,12 @@ public class MainActivity extends ActionBarActivity {
 	public void setRule(Rule rule) {
 		if (silanceManager != null) {
 			silanceManager.setRule(this.getApplicationContext(), rule);
+			silanceManager.setListener(this);
 		}
+	}
+
+	@Override
+	public void refreshRuleList() {
+		refreshList();
 	}
 }
