@@ -32,20 +32,16 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 	final public static String KEY_VOLUME_LEVEL = "volume";
 	
 	private OnRuleRefreshListener listener;
+	private Context context;
 
 	public OnRuleRefreshListener getListener() {
 		return listener;
 	}
 
-
-	public void setListener(OnRuleRefreshListener listener) {
-		this.listener = listener;
-	}
-
-
 	@SuppressLint("Wakelock")
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		this.context = context;
 		PowerManager powerManager = (PowerManager) context
 				.getSystemService(Context.POWER_SERVICE);
 		PowerManager.WakeLock wakeLock = powerManager.newWakeLock(
@@ -102,6 +98,8 @@ public class SilenceManagerReceiver extends BroadcastReceiver {
 						listener.refreshRuleList();
 					}
 				}
+				
+				context.sendBroadcast(new Intent(MainActivity.ACTION_RULELIST_UPDATE));
 			}
 
 		}
