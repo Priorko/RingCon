@@ -14,7 +14,7 @@ public class SQLiteAdapter {
 	private DBHelper dbHelper;
 
 	final private static String[] PROJECTION = {Rule.KEY_ID, Rule.KEY_STARTDATE, Rule.KEY_ENDDATE,
-				Rule.KEY_ACTIVE, Rule.KEY_WEEKDAYS };
+				Rule.KEY_ACTIVE, Rule.KEY_WEEKDAYS, Rule.KEY_MODE };
 
 	public SQLiteAdapter(Context context) {
 		dbHelper = new DBHelper(context);
@@ -44,7 +44,7 @@ public class SQLiteAdapter {
 	public Rule getRule(long id) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-		Cursor cursor = db.query(DBHelper.TABLE_NAME, PROJECTION , null, null, null, null, null);
+		Cursor cursor = db.query(DBHelper.TABLE_NAME, PROJECTION , Rule.KEY_ID + "=" + id, null, null, null, null, null);
 		if(cursor.getCount()==0) {
 			return null;
 		}
@@ -57,8 +57,9 @@ public class SQLiteAdapter {
 		long endTime = cursor.getLong(cursor.getColumnIndexOrThrow(Rule.KEY_ENDDATE));
 		boolean isActive = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndexOrThrow(Rule.KEY_ACTIVE)));
 		int weekDays = cursor.getInt(cursor.getColumnIndexOrThrow(Rule.KEY_WEEKDAYS));
+		int mode = cursor.getInt(cursor.getColumnIndexOrThrow(Rule.KEY_MODE));
 
-		Rule rule = new Rule(itemId, startTime, endTime, weekDays, isActive);
+		Rule rule = new Rule(itemId, startTime, endTime, weekDays, mode, isActive);
 
 		cursor.close();
 		db.close();
@@ -76,7 +77,8 @@ public class SQLiteAdapter {
 			null,				// The columns for the WHERE clause
 			null,				// The values for the WHERE clause
 			null,				// don't group the rows
-			null,				// don't filter by row groups
+			null,
+			null,// don't filter by row groups
 			null				// The sort order
 			);
 		if(cursor.getCount()==0) {
@@ -94,6 +96,7 @@ public class SQLiteAdapter {
 			long endTime = cursor.getLong(cursor.getColumnIndexOrThrow(Rule.KEY_ENDDATE));
 			boolean isActive = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndexOrThrow(Rule.KEY_ACTIVE)));
 			int weekDays = cursor.getInt(cursor.getColumnIndexOrThrow(Rule.KEY_WEEKDAYS));
+			int mode = cursor.getInt(cursor.getColumnIndexOrThrow(Rule.KEY_MODE));
 
 //			Date startDate = new Date();
 //			Date endDate = new Date(endTime);
@@ -104,7 +107,7 @@ public class SQLiteAdapter {
 			Log.d("isActive", ""+isActive);
 			Log.d("weekDays", ""+weekDays);
 			
-			Rule rule = new Rule(itemId, startTime, endTime, weekDays, isActive);
+			Rule rule = new Rule(itemId, startTime, endTime, weekDays, mode, isActive);
 			ruleList.add(rule);
 		}
 		cursor.close();

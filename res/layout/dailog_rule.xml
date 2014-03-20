@@ -56,25 +56,34 @@
             </LinearLayout>
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/repeatCheck"
+        <TextView
+            android:id="@+id/spinnerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/timeLayout"
-            android:text="@string/repeat"
-            android:visibility="invisible" />
+            android:text="@string/spinner" />
+
+        <Spinner
+            android:id="@+id/sModeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/spinnerText"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/spinnerText"
+            android:entries="@array/sound_mode" />
 
         <LinearLayout
             android:id="@+id/dayContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/repeatCheck"
+            android:layout_below="@id/sModeSpinner"
             android:orientation="horizontal"
             android:paddingTop="5dp" />
 
         <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/dayContainer"

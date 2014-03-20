@@ -2,6 +2,10 @@ package com.example.ringcon;
 
 import java.util.ArrayList;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -14,15 +18,22 @@ import android.widget.TextView;
 import com.example.ringcon.sql.SQLiteAdapter;
 import com.example.ringcon.structure.Rule;
 
-public class MainActivity extends ActionBarActivity {
-
+public class MainActivity extends ActionBarActivity{
+//	static boolean active = false;
 	public final static String ADD_RULE = "add_rule";
 	public final static String EDIT_RULE = "edit_rule";
+	public static final String ACTION_RULELIST_UPDATE = "com.example.ringcon.RULELIST_UPDATE";
+
 	ListView ruleLv;
 	SilenceManagerReceiver silanceManager;
 	SQLiteAdapter sqliteAdapter;
 	RulesAdapter ruleAdapter;
-
+	private BroadcastReceiver ruleListUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refreshList();
+        }
+    };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,9 +42,19 @@ public class MainActivity extends ActionBarActivity {
 		sqliteAdapter = new SQLiteAdapter(this);
 		silanceManager = new SilenceManagerReceiver();
 		ruleLv = (ListView) findViewById(R.id.ruleLv);
-		
+		IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ACTION_RULELIST_UPDATE);
+        registerReceiver(ruleListUpdateReceiver, intentFilter);
+
 		refreshList();
 	}
+	
+	@Override
+		protected void onDestroy() {
+		unregisterReceiver(ruleListUpdateReceiver);
+			super.onDestroy();
+		}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,6 +75,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 
 	public void refreshList() {
 		final ArrayList<Rule> ruleList = new SQLiteAdapter(this).getRules();
@@ -88,10 +110,21 @@ public class MainActivity extends ActionBarActivity {
 		new SQLiteAdapter(this).removeRule(rule.getId());
 		refreshList();
 	}
+	public void onUnset(View v) {
+		Rule rule = (Rule) v.getTag();
+		silanceManager.cancelAlarm(this.getApplicationContext(), rule);
+		
+		new SQLiteAdapter(this).removeRule(rule.getId());
+		
+		refreshList();
+	}
 
 	public void setRule(Rule rule) {
 		if (silanceManager != null) {
 			silanceManager.setRule(this.getApplicationContext(), rule);
+			
 		}
 	}
+
+	
 }

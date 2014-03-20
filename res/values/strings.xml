@@ -12,8 +12,8 @@
     <string name="cancel">Cancel</string>
     <string name="no_rule">No rules.</string>
     <string name="repeat">Repeat every</string>
-    <string name="no_days">No days range specified</string>
-    
+    <string name="no_days">For first match</string>
+    <string name="spinner">Sound mode:</string>
     <string-array name="days">
         <item>Sun</item>
         <item>Mon</item>
@@ -22,6 +22,10 @@
         <item>Thu</item>
         <item>Fri</item>
         <item>Sat</item>
+    </string-array>
+    <string-array name="sound_mode">
+        <item mode="0">No sound</item>
+        <item mode="1">Vibro</item>
     </string-array>
 
 </resources>
