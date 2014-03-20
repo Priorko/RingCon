@@ -106,5 +106,4 @@
                 android:text="@string/apply_rule" />
         </LinearLayout>
     </RelativeLayout>
-
 </ScrollView>
