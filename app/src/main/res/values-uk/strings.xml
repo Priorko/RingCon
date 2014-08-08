@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RingCon</string>
+    <string name="debug_text"></string>
+    <string name="action_settings">Налаштування</string>
+    <string name="add_rule">Додати</string>
+    <string name="refresh">Обновити</string>
+    <string name="apply_rule">Задіяти</string>
+    <string name="start_time">Початок</string>
+    <string name="end_time">Закінчення</string>
+    <string name="cancel">Відміна</string>
+    <string name="no_rule">Правила вимкнення \nзвуку відсутні</string>
+    
+    <string name="no_days">Дні необрано</string>
+    
+    <string-array name="days">
+        <item>Нд</item>
+        <item>Пн</item>
+        <item>Вт</item>
+        <item>Ср</item>
+        <item>Чт</item>
+        <item>Пт</item>
+        <item>сб</item>
+    </string-array>
+
+</resources>

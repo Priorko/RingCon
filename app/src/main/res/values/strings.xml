@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RingCon</string>
+    <string name="debug_text"></string>
+    <string name="action_settings">Settings</string>
+    <string name="add_rule">Add</string>
+    <string name="refresh">Refresh</string>
+    <string name="apply_rule">Apply</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_rule">No rules.</string>
+    <string name="repeat">Repeat every</string>
+    <string name="no_days">For first match</string>
+    <string name="spinner">Sound mode:</string>
+    <string-array name="days">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+    <string-array name="sound_mode">
+        <item mode="0">No sound</item>
+        <item mode="1">Vibro</item>
+    </string-array>
+
+</resources>
